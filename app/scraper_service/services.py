@@ -3,7 +3,7 @@ import json
 import random
 from typing import Dict, List, Optional
 from playwright.async_api import Browser, BrowserContext, Page, async_playwright
-from utils.XPATHs.config import (
+from .utils.XPATHs.config import (
     URL_MAPS,
     ADS_CONTAINER_XPATH,
     ADS_XPATH,
@@ -213,15 +213,13 @@ async def scroll_to_element(page: Page, selector: str,ads_limit:int=0) -> None:
     except Exception as e:
         print(f"Error al desplazar al elemento: {e}")
 
-import time
 
-if __name__ == "__main__":
-    tiempo_inicial = time.time()
-    asyncio.run(scrape_page("hoteles", "valencia", 20, ["instagram", "others"]))
-    tiempo_final = time.time()
-    tiempo_total = tiempo_final - tiempo_inicial
+async def close_browser(browser: Browser) -> None:
+    """Cierra el navegador."""
+    try:
+        await browser.close()
+    except Exception as e:
+        print(f"Error al cerrar el navegador: {e}")
 
-    horas, resto = divmod(tiempo_total, 3600)
-    minutos, segundos = divmod(resto, 60)
 
-    print(f"Tiempo total de ejecución: {int(horas):02d}:{int(minutos):02d}:{int(segundos):02d}")
+
